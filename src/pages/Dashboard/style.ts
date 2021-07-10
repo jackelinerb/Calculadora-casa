@@ -53,13 +53,13 @@ export const CheckBox = styled.form `
 color: #fff;
 font-size: 20px;
 margin-top: 10px;
+max-width: 800px;
+height: 50px;
+display: flex;
  input{
-    margin-left: 20px;
+    flex:1;
     border-radius: 10px;
-    padding: 2px;
- }
- label{
-     margin-left: 5px;
+    padding: 0 24px;
  }
 
 `
