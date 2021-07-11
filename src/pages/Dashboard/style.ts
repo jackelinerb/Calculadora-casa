@@ -13,30 +13,12 @@ export const Form = styled.form `
 margin-top: 30px;
 max-width: 800px;
 display:flex;
-
-input{
-    flex:1;
-    height: 50px;
-    padding: 0 24px;
-    border-radius: 10px;
-    color: #3a3a3a;
-
-  &:placeholder{
-      color:#a8a8b3
-  }  
+flex-direction:row;
+@media (max-width: 500px) {
+    flex-direction: column;
 }
-button {
-    width: 210px;
-    height: 50px;
-    background: #6a1f9a;
-    color: #fff;
-    transition: background-color 0.2s;
-    flex:1;
-    margin-top: 40px;
-
-    &:hover{
-        background: ${shade(0.2, '#6a1f9a')};
-    }
+label{
+    color: #ffff;
 }
 
 `;
@@ -62,4 +44,9 @@ display: flex;
     padding: 0 24px;
  }
 
+`
+export const Error = styled.span `
+display:block;
+color: #c53030;
+margin-top: 8px;
 `

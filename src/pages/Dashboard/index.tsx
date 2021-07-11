@@ -58,7 +58,6 @@ const Dashboard: React.FC = () => {
     setState({ ...state, altura4: event.target.value });
   };
   const changeWind1 = (event: any) => {
-    console.log(event.target.value, 'janela');
     setState({ ...state, janela1: event.target.value });
   };
   const changeWind2 = (event: any) => {
@@ -93,13 +92,21 @@ const Dashboard: React.FC = () => {
     return result;
   }
   function totalVariable(a: number, b: number, c: number, d: number) {
-    let result: number = a + b + c + d;
+    let result: number = Number(a) + Number(b) + Number(c) + Number(d);
     return result;
   }
 
   function handleAdd(event: FormEvent<HTMLFormElement>) {
     setInputError('');
     event.preventDefault();
+    let areaportjan1 = areaWindDoor(state.porta1, state.janela1);
+    let areaparede1 = areaWall(state.largura1, state.altura1);
+    let areaportjan2 = areaWindDoor(state.porta2, state.janela2);
+    let areaparede2 = areaWall(state.largura2, state.altura2);
+    let areaportjan3 = areaWindDoor(state.porta3, state.janela3);
+    let areaparede3 = areaWall(state.largura3, state.altura3);
+    let areaportjan4 = areaWindDoor(state.porta4, state.janela4);
+    let areaparede4 = areaWall(state.largura4, state.altura4);
 
     if (
       !state.largura1 ||
@@ -107,6 +114,7 @@ const Dashboard: React.FC = () => {
       !state.largura3 ||
       !state.largura4
     ) {
+      console.log("larguras")
       setInputError(
         'Digite todas as larguras. Nenhuma largura pode ter menos do que 1m',
       );
@@ -116,6 +124,7 @@ const Dashboard: React.FC = () => {
       !state.altura3 ||
       !state.altura4
     ) {
+      console.log("alturas")
       setInputError(
         'Digite todas as alturas.Nenhuma altura pode ter menos do que 1m',
       );
@@ -125,6 +134,7 @@ const Dashboard: React.FC = () => {
       state.largura3 < 1 ||
       state.largura4 < 1
     ) {
+      console.log("largura 1m")
       setInputError('Nenhuma largura pode ter menos do que 1m');
     } else if (
       state.altura1 < 1 ||
@@ -132,20 +142,16 @@ const Dashboard: React.FC = () => {
       state.altura3 < 1 ||
       state.altura4 < 1
     ) {
+      console.log("altura 1m")
       setInputError('Nenhuma altura pode ter menos do que 1m');
-    } else if (
-      state.altura1 < 1 ||
-      state.altura2 < 1 ||
-      state.altura3 < 1 ||
-      state.altura4 < 1
-    ) {
-      setInputError('Nenhuma altura pode ter menos do que 1m');
-    } else if (
+    }
+     else if (
       state.altura1 > 15 ||
       state.altura2 > 15 ||
       state.altura3 > 15 ||
       state.altura4 > 15
     ) {
+      console.log("altura 15m")
       setInputError('Nenhuma altura pode ter mais do que 15m');
     } else if (
       state.largura1 > 15 ||
@@ -153,46 +159,35 @@ const Dashboard: React.FC = () => {
       state.largura3 > 15 ||
       state.largura4 > 15
     ) {
+      console.log("largura 15m")
       setInputError('Nenhuma largura pode ter mais do que 15m');
     } else if (
-      state.porta1 > 0 ||
-      state.porta2 > 0 ||
-      state.porta3 > 0 ||
-      state.porta4 > 0 ||
-      state.janela1 > 0 ||
-      state.janela2 > 0 ||
-      state.janela3 > 0 ||
-      state.janela4 > 0
+      (state.altura1 < 2.2 && state.porta1 > 0) ||
+      (state.altura2 < 2.2 && state.porta2 > 0) ||
+      (state.altura3 < 2.2 && state.porta3 > 0) ||
+      (state.altura4 < 2.2 && state.porta4 > 0)
     ) {
-      let areaportjan1 = areaWindDoor(state.porta1, state.janela1);
-      let areaparede1 = areaWall(state.largura1, state.altura1);
-      if (areaparede1 - areaportjan1 < areaparede1 / 2) {
+      console.log("30cm")
+      setInputError(
+        'A altura da parede precisa ser, no mínimo, 30cm maior do que a porta',
+      );
+    } else if (
+      (state.porta1 > 0 && (areaparede1 - areaportjan1 < areaparede1 / 2) )||
+      (state.porta2 > 0 && (areaparede2 - areaportjan2 < areaparede2 / 2))||
+      (state.porta3 > 0 && (areaparede3 - areaportjan3 < areaparede3 / 2))||
+      (state.porta4 > 0 && (areaparede4 - areaportjan4 < areaparede4 / 2)) ||
+      (state.janela1 > 0 && (areaparede1 - areaportjan1 < areaparede1 / 2))||
+      (state.janela2 > 0 && (areaparede2 - areaportjan2 < areaparede2 / 2))||
+      (state.janela3 > 0 && (areaparede3 - areaportjan3 < areaparede3 / 2))||
+      (state.janela4 > 0 && (areaparede4 - areaportjan4 < areaparede4 / 2))
+    ) {
+      console.log('50%')
+
         setInputError(
-          'Area da porta + area da janela da parede 1 não pode ser maior do que 50% da area total da parede 1 ',
+          'Area da porta + area da janela da parede não pode ser maior do que 50% da area total da parede ',
         );
-      }
-      let areaportjan2 = areaWindDoor(state.porta2, state.janela2);
-      let areaparede2 = areaWall(state.largura2, state.altura2);
-      if (areaparede2 - areaportjan2 < areaparede2 / 2) {
-        setInputError(
-          'Area da porta + area da janela da parede 2 não pode ser maior do que 50% da area total da parede 2 ',
-        );
-      }
-      let areaportjan3 = areaWindDoor(state.porta3, state.janela3);
-      let areaparede3 = areaWall(state.largura3, state.altura3);
-      if (areaparede3 - areaportjan3 < areaparede3 / 2) {
-        setInputError(
-          'Area da porta + area da janela da parede 3 não pode ser maior do que 50% da area total da parede 3 ',
-        );
-      }
-      let areaportjan4 = areaWindDoor(state.porta4, state.janela4);
-      let areaparede4 = areaWall(state.largura4, state.altura4);
-      if (areaparede4 - areaportjan4 < areaparede4 / 2) {
-        setInputError(
-          'Area da porta + area da janela da parede 4 não pode ser maior do que 50% da area total da parede 4 ',
-        );
-      }
-    } else {
+    }
+    else{
       let totalLarg = totalVariable(
         state.largura1,
         state.largura2,
@@ -207,7 +202,7 @@ const Dashboard: React.FC = () => {
         state.altura4,
       );
       setTotalAlt(totalAlt);
-      let totalPort = totalVariable(
+      let totalPort= totalVariable(
         state.porta1,
         state.porta2,
         state.porta3,

@@ -1,14 +1,19 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom'
+import { Router, Switch, Route } from 'react-router-dom'
+import history from '../utils/history'
 
 
 import Dashboard from '../pages/Dashboard';
 import Repository from '../pages/Repository';
 
 const Routes: React.FC = () => (
-    <Switch>
-        <Route path="/" exact component={Dashboard} />
-        <Route path="/Repository" component={Repository} />
-    </Switch>
+    <Router history={history}>
+        <Route render ={({location})=>(
+                <Switch location={location}>
+                <Route path="/" exact component={Dashboard} />
+                <Route path="/Repository" component={Repository} />
+            </Switch>
+        )}/>
+    </Router>
 )
 export default Routes;
