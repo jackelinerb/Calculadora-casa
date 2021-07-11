@@ -13,6 +13,6 @@ Após intalar todas as dependencias utilize o
 
 ### `yarn start`
 
-Após esse processo irá abrir o seu navegador uma pagina com o projeto rodando.
+Após esse processo irá abrir no seu navegador uma pagina e o projeto estará rodando.
 
 Se divirta :)
